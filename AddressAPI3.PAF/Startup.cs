@@ -12,6 +12,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NLog.Extensions.Logging;
 using System.Text;
+using AddressAPI3.Common.Security;
+using AddressAPI3.EFUserData;
 
 namespace AddressAPI3.API
 {
@@ -28,6 +30,7 @@ namespace AddressAPI3.API
         {
             var efConnectionString = Configuration.GetConnectionString("EFConnection");
             var azureConnectionString = Configuration.GetConnectionString("AzureStorageConnection");
+            var efUserConnectionString = Configuration.GetConnectionString("EFUserConnection");
             var mailTo = Configuration["MailSettings:mailTo"];
 
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
@@ -61,10 +64,12 @@ namespace AddressAPI3.API
 
             // CONTEXT
             services.AddDbContext<AddressContext>(o => o.UseSqlServer(efConnectionString));
+            services.AddDbContext<UserContext>(o => o.UseSqlServer(efUserConnectionString));
 
             // DI
             services.AddTransient<IMailService, MockMailService>(serviceProvider => new MockMailService(mailTo));
-            services.AddScoped<IUserRepository, MockUserRepository>();
+            services.AddScoped<IPasswordHashService, PasswordHashService>();
+            services.AddScoped<IUserRepository, EFUserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAddressRepository, EFAddressRepository>();
             //services.AddScoped<IAddressRepository, AzureAddressRepository>(serviceProvider => new AzureAddressRepository(azureConnectionString));

@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressAPI3.MockData", "Add
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressAPI3.MockUserData", "AddressAPI3.MockUserData\AddressAPI3.MockUserData.csproj", "{72102364-A71B-4ADE-821C-ED513D8353E8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressAPI3.EFUserData", "AddressAPI3.EFUserData\AddressAPI3.EFUserData.csproj", "{BE21CF51-86AF-4E0F-BB85-7E0CDF4E83B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{72102364-A71B-4ADE-821C-ED513D8353E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72102364-A71B-4ADE-821C-ED513D8353E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72102364-A71B-4ADE-821C-ED513D8353E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE21CF51-86AF-4E0F-BB85-7E0CDF4E83B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE21CF51-86AF-4E0F-BB85-7E0CDF4E83B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE21CF51-86AF-4E0F-BB85-7E0CDF4E83B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE21CF51-86AF-4E0F-BB85-7E0CDF4E83B1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 		{3AEAEC8D-2C33-4708-BBDB-C56BB41D02EB} = {91CF2396-6FD7-4EB4-AA70-55B04061E20F}
 		{6AFA3D70-28C5-4DAB-8771-CCBC73CABF74} = {91CF2396-6FD7-4EB4-AA70-55B04061E20F}
 		{72102364-A71B-4ADE-821C-ED513D8353E8} = {FCBAD5C1-1138-439A-BED5-CD4D50EFBE35}
+		{BE21CF51-86AF-4E0F-BB85-7E0CDF4E83B1} = {FCBAD5C1-1138-439A-BED5-CD4D50EFBE35}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {49A5C0EB-32E5-4375-A041-518A67C46186}

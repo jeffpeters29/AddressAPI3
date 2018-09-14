@@ -10,10 +10,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AddressAPI3.AzureData\AddressAPI3.AzureData.csproj" />
+    <ProjectReference Include="..\AddressAPI3.Common\AddressAPI3.Common.csproj" />
     <ProjectReference Include="..\AddressAPI3.Domain\AddressAPI3.Domain.csproj" />
     <ProjectReference Include="..\AddressAPI3.EFData\AddressAPI3.EFData.csproj" />
+    <ProjectReference Include="..\AddressAPI3.EFUserData\AddressAPI3.EFUserData.csproj" />
     <ProjectReference Include="..\AddressAPI3.MockData\AddressAPI3.MockData.csproj" />
     <ProjectReference Include="..\AddressAPI3.MockUserData\AddressAPI3.MockUserData.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.Extensions.Identity.Core">
+      <HintPath>..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.extensions.identity.core\2.1.1\lib\netstandard2.0\Microsoft.Extensions.Identity.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
