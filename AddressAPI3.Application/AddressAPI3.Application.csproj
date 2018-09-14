@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.2.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AddressAPI3.AzureData\AddressAPI3.AzureData.csproj" />
+    <ProjectReference Include="..\AddressAPI3.Domain\AddressAPI3.Domain.csproj" />
+    <ProjectReference Include="..\AddressAPI3.EFData\AddressAPI3.EFData.csproj" />
+    <ProjectReference Include="..\AddressAPI3.MockData\AddressAPI3.MockData.csproj" />
+    <ProjectReference Include="..\AddressAPI3.MockUserData\AddressAPI3.MockUserData.csproj" />
+  </ItemGroup>
+
+</Project>
