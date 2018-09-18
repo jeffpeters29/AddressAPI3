@@ -20,7 +20,7 @@ namespace AddressAPI3.Application.User
             _appSettings = appSettings.Value;
         }
 
-        public User Authenticate(string username, string password)
+        public User Authenticate(string username, string password, string referer)
         {
             var user = _userRepository.GetUser(username, password);
 
@@ -31,11 +31,14 @@ namespace AddressAPI3.Application.User
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
+                //Issuer = user.Referrer,
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Surname, user.LastName),
+                    new Claim(ClaimTypes.Uri, referer)
                 }),
-                Expires = DateTime.UtcNow.AddDays(7),
+                Expires = DateTime.UtcNow.AddSeconds(60),     
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -43,7 +46,7 @@ namespace AddressAPI3.Application.User
 
             // remove password before returning
             user.Password = null;
-
+            
             return user;
         }
     }

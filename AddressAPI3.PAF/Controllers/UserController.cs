@@ -20,7 +20,9 @@ namespace AddressAPI3.API.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate(User userParam)
         {
-            var user = _userService.Authenticate(userParam.Username, userParam.Password);
+            var referer = this.Request.Headers["Referer"].ToString();
+
+            var user = _userService.Authenticate(userParam.Username, userParam.Password, userParam.Referer);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });

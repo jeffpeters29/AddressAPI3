@@ -10,7 +10,7 @@ namespace AddressAPI3.EFData.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        DateTime CreatedDate { get; set; }
-        DateTime UpdatedDate { get; set; }
+        DateTime Inserted { get; set; }
+        DateTime Updated { get; set; }
     }
 }

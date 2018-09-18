@@ -1,4 +1,5 @@
-﻿using AddressAPI3.Application.Address;
+﻿using System;
+using AddressAPI3.Application.Address;
 using AddressAPI3.Application.User;
 using AddressAPI3.Common.Mail;
 using AddressAPI3.EFData;
@@ -36,7 +37,6 @@ namespace AddressAPI3.API
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
                                                                             .AllowAnyMethod()
                                                                             .AllowAnyHeader()));
-
             // STRONGLY TYPED SETTINGS OBJECTS
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
@@ -55,10 +55,12 @@ namespace AddressAPI3.API
                     x.SaveToken = true;
                     x.TokenValidationParameters = new TokenValidationParameters
                     {
+                        //ClockSkew = TimeSpan.Zero,    // Ian (allows for different times configured on different PC's)
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
                         ValidateIssuer = false,
-                        ValidateAudience = false
+                        ValidateAudience = false,
+                        ValidateLifetime = true         // Sean Wildermuth PL video (checks for expiration of token)
                     };
                 });
 

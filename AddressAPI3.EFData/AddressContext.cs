@@ -5,7 +5,7 @@ namespace AddressAPI3.EFData
 {
     public class AddressContext : DbContext
     {
-        public AddressContext(DbContextOptions options) : base(options)
+        public AddressContext(DbContextOptions<AddressContext> options) : base(options)
         {
         }
 
