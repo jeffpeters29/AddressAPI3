@@ -77,6 +77,8 @@ namespace AddressAPI3.API
             //services.AddScoped<IAddressRepository, AzureAddressRepository>(serviceProvider => new AzureAddressRepository(azureConnectionString));
 
             services.AddMvc();
+
+            services.AddMemoryCache();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

@@ -1,15 +1,17 @@
 ﻿using AddressAPI3.Application.Address;
+using AddressAPI3.Application.User;
 using AddressAPI3.Common.Mail;
+using AddressAPI3.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using AddressAPI3.Application.User;
-using AddressAPI3.Domain;
 
 namespace AddressAPI3.API.Controllers
 {
@@ -22,14 +24,16 @@ namespace AddressAPI3.API.Controllers
         private readonly IMailService _mailService;
         private readonly IAddressRepository _addressRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IMemoryCache _cache;
 
         public AddressController(ILogger<AddressController> logger, IMailService mailService, IAddressRepository addressRepository
-                                ,IUserRepository userRepository)
+                                , IUserRepository userRepository, IMemoryCache cache)
         {
             _logger = logger;
             _mailService = mailService;
             _addressRepository = addressRepository;
             _userRepository = userRepository;
+            _cache = cache;
         }
 
         [HttpGet("{searchTerm}")]
@@ -47,7 +51,7 @@ namespace AddressAPI3.API.Controllers
             {
                 var sw = StartStopwatch();
 
-                var addresses = _addressRepository.GetAddresses(searchTerm);
+                var addresses = GetAddresses(searchTerm);
 
                 await LogActivity(userId, referer, searchTerm, sw);
 
@@ -63,6 +67,22 @@ namespace AddressAPI3.API.Controllers
                 return StatusCode(500, "A problem happened whilst searching for searchTerm {searchTerm}");
             }
         }
+
+        private IEnumerable<Address> GetAddresses(string searchTerm)
+        {
+            IEnumerable<Address> addresses;
+
+            if (!_cache.TryGetValue(searchTerm, out addresses))
+            {
+                addresses = _addressRepository.GetAddresses(searchTerm);
+                _cache.Set(searchTerm, addresses);
+            }
+
+            return addresses;
+        }
+
+
+        #region LOGGING         
 
         private static Stopwatch StartStopwatch()
         {
@@ -103,5 +123,7 @@ namespace AddressAPI3.API.Controllers
         {
             return claimsUri != referer;
         }
+
+        #endregion
     }
 }
