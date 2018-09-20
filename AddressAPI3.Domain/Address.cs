@@ -18,6 +18,5 @@ namespace AddressAPI3.Domain
 
         public int Id { get; set; }
         public DateTime Inserted { get; set; }
-        public DateTime Updated { get; set; }
     }
 }

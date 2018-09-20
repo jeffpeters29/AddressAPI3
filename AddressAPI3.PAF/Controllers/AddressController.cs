@@ -22,31 +22,37 @@ namespace AddressAPI3.API.Controllers
     {
         private readonly ILogger<AddressController> _logger;
         private readonly IMailService _mailService;
-        private readonly IAddressRepository _addressRepository;
+        //private readonly IAddressRepository _addressRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMemoryCache _cache;
+        private readonly IAddressService _addressService;
 
-        public AddressController(ILogger<AddressController> logger, IMailService mailService, IAddressRepository addressRepository
-                                , IUserRepository userRepository, IMemoryCache cache)
+        public AddressController(ILogger<AddressController> logger, IMailService mailService  //, IAddressRepository addressRepository
+                                , IUserRepository userRepository, IMemoryCache cache
+                                , IAddressService addressService)
         {
             _logger = logger;
             _mailService = mailService;
-            _addressRepository = addressRepository;
+            //_addressRepository = addressRepository;
             _userRepository = userRepository;
             _cache = cache;
+            _addressService = addressService;
         }
 
         [HttpGet("{searchTerm}")]
         public async Task<IActionResult> GetAddressPostcode(string searchTerm)
         {
-            searchTerm = searchTerm.ToUpper();
+            searchTerm = searchTerm.Trim().ToUpper();
             var userId = this.User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name")?.Value;
             var uri = this.User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/uri")?.Value;
             var referer = this.Request.Headers["Referer"].ToString();
 
+            // Guard clauses
+            if (string.IsNullOrEmpty(searchTerm)) return Unauthorized();
             if (string.IsNullOrEmpty(userId) || string.IsNullOrEmpty(uri) || string.IsNullOrEmpty(referer)) return Unauthorized();
             if (IsUnrecognisedReferer(uri, referer)) return Unauthorized();
 
+            //Get data & log
             try
             {
                 var sw = StartStopwatch();
@@ -62,27 +68,31 @@ namespace AddressAPI3.API.Controllers
             }
             catch (Exception ex)
             {
+                var innerException = (ex.InnerException != null) ? ex.InnerException.Message : "";
+
                 _logger.LogCritical($"###  Exception whilst searching for postcode {searchTerm} ### ", ex);
-                _mailService.Send($"PAF API : Critical Error - {searchTerm}", ex.Message);
+                _mailService.Send($"PAF API : Critical Error - {searchTerm}", ex.Message + " : " + innerException);
+
                 return StatusCode(500, "A problem happened whilst searching for searchTerm {searchTerm}");
             }
         }
 
         private IEnumerable<Address> GetAddresses(string searchTerm)
         {
-            IEnumerable<Address> addresses;
+            // If possible return data from cache, otherwise get from repository
+            //if (_cache.TryGetValue(searchTerm, out IEnumerable<AddressGroup> addresses)) return addresses;
 
-            if (!_cache.TryGetValue(searchTerm, out addresses))
-            {
-                addresses = _addressRepository.GetAddresses(searchTerm);
-                _cache.Set(searchTerm, addresses);
-            }
+            IEnumerable<AddressGroup> addresses = new List<AddressGroup>();
+
+            addresses = _addressService.GetAddresses(searchTerm);
+
+            _cache.Set(searchTerm, addresses);
 
             return addresses;
         }
 
 
-        #region LOGGING         
+        #region LOGGING / GUARD          
 
         private static Stopwatch StartStopwatch()
         {

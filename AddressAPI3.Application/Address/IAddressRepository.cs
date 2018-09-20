@@ -6,8 +6,10 @@ namespace AddressAPI3.Application.Address
 
     public interface IAddressRepository
     {
-        IEnumerable<Address> GetAddresses();
-
         IEnumerable<Address> GetAddresses(string searchTerm);
+
+        IEnumerable<AddressGroup> GetGroupedAddresses(string searchTerm);
+
+        IEnumerable<AddressGroup> GetFullAddresses(string postcode);
     }
 }

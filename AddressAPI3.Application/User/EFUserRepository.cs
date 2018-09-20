@@ -1,9 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using AddressAPI3.Common.Security;
+﻿using AddressAPI3.Common.Security;
 using AddressAPI3.EFUserData;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AddressAPI3.Application.User
 {
@@ -28,33 +27,26 @@ namespace AddressAPI3.Application.User
 
             return _ctx.Users.Where(u => u.Username == username && u.PasswordHash == hashedPassword)
                              .Select(u => new User()
-                                    {
-                                        Id = u.Id,
-                                        Username = u.Username,
-                                        FirstName = u.FirstName,
-                                        LastName = u.LastName
-                                    })
-                             .FirstOrDefault();  
+                             {
+                                 Id = u.Id,
+                                 Username = u.Username,
+                                 FirstName = u.FirstName,
+                                 LastName = u.LastName
+                             })
+                             .FirstOrDefault();
         }
 
         public async Task LogActivity(ActivityLog activityLog)
         {
-            try
+            _ctx.ActivityLogs.Add(new EFUserData.Entities.ActivityLog()
             {
-                _ctx.ActivityLogs.Add(new EFUserData.Entities.ActivityLog()
-                {
-                    UserId = activityLog.UserId,
-                    Referer = activityLog.Referer,
-                    SearchTerm = activityLog.SearchTerm,
-                    ElapsedTime = activityLog.ElapsedTime,
-                    Inserted = DateTime.UtcNow
-                });
-                await _ctx.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+                UserId = activityLog.UserId,
+                Referer = activityLog.Referer,
+                SearchTerm = activityLog.SearchTerm,
+                ElapsedTime = activityLog.ElapsedTime,
+                Inserted = DateTime.UtcNow
+            });
+            await _ctx.SaveChangesAsync();
         }
     }
 }

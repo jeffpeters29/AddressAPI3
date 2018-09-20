@@ -73,6 +73,7 @@ namespace AddressAPI3.API
             services.AddScoped<IPasswordHashService, PasswordHashService>();
             services.AddScoped<IUserRepository, EFUserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<IAddressRepository, EFAddressRepository>();
             //services.AddScoped<IAddressRepository, AzureAddressRepository>(serviceProvider => new AzureAddressRepository(azureConnectionString));
 

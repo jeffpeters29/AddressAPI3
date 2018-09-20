@@ -8,10 +8,6 @@ namespace AddressAPI3.Application.Address
 
     public class MockAddressRepository : IAddressRepository
     {
-        public IEnumerable<Address> GetAddresses()
-        {
-            return MockAddressStore.Current.Addresses;
-        }
 
         public IEnumerable<Address> GetAddresses(string searchTerm)
         {
@@ -19,6 +15,16 @@ namespace AddressAPI3.Application.Address
                 .Where(a => a.Postcode.StartsWith(searchTerm))
                 .OrderBy(a => a.Postcode)
                 .ToList();
+        }
+
+        public IEnumerable<AddressGroup> GetGroupedAddresses(string searchTerm)
+        {
+            return null;
+        }
+
+        public IEnumerable<AddressGroup> GetFullAddresses(string postcode)
+        {
+            return null;
         }
     }
 }

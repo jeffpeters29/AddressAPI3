@@ -13,11 +13,6 @@ namespace AddressAPI3.Application.Address
         {
         }
 
-        public IEnumerable<Address> GetAddresses()
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Address> GetAddresses(string searchTerm)
         {
             var task = GetAllStartsWith(searchTerm);
@@ -36,6 +31,16 @@ namespace AddressAPI3.Application.Address
                 .Take(10)
                 .ToList();
             ;
+        }
+
+        public IEnumerable<AddressGroup> GetGroupedAddresses(string searchTerm)
+        {
+            return null;
+        }
+
+        public IEnumerable<AddressGroup> GetFullAddresses(string postcode)
+        {
+            return null;
         }
     }
 }
