@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using AddressAPI3.Domain;
+﻿using AddressAPI3.Domain;
+using Newtonsoft.Json;
 
 namespace AddressAPI3.Application.Helpers
 {
@@ -13,13 +9,24 @@ namespace AddressAPI3.Application.Helpers
         {
             inputString = inputString.RemoveWhiteSpace();
 
-            return inputString.Length > 5; 
+            return inputString.Length > 5;
         }
 
-        public static string ToFormattedString(this AddressGroup addressGroup)
+        public static string ToFormattedString(this AddressData addressData)
         {
-            return $"{addressGroup.Postcode} -  {addressGroup.Street} {addressGroup.Town} : " +
-                   $"{addressGroup.Count} " + ((addressGroup.Count == 1) ? " address" : " addresses");
+            // StartText : for specific postcodes
+            var organisation = (!string.IsNullOrEmpty(addressData.Organisation)) ? addressData.Organisation.Trim() + ", " : string.Empty;
+            var number = (addressData.Number != 0) ? addressData.Number.ToString().Trim() + " " : string.Empty;
+            var startText = (organisation + number).Trim() + " ";
+
+            // Count : for grouped postcodes
+            var countText = (addressData.Count > 0)
+                            ? " - " + $"{addressData.Count} " + ((addressData.Count == 1) ? "address" : "addresses")
+                            : string.Empty;
+
+
+            return $"{addressData.Postcode} : {startText}{addressData.Street}, {addressData.Town}" + countText
+                 + $"<span style='display:none'>{JsonConvert.SerializeObject(addressData)}</span>";
         }
     }
 }

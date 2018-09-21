@@ -18,7 +18,8 @@ namespace AddressAPI3.Application.Address
 
         public IEnumerable<Address> GetAddresses(string searchTerm)
         {
-            // (1) First go at bring back the addresses (without grouping)
+            // (1) Jeff's first go at bring back the addresses (without grouping)
+            //     Now replaced below
             return _ctx.Addresses.AsNoTracking()
                 .Where(a => a.Postcode.Replace(" ", "").StartsWith(searchTerm))
                 .OrderBy(a => a.Postcode)
@@ -35,27 +36,41 @@ namespace AddressAPI3.Application.Address
                 .ToList();
         }
 
-        public IEnumerable<AddressGroup> GetGroupedAddresses(string searchTerm)
+        public IEnumerable<AddressData> GetGroupedAddresses(string searchTerm)
         {
             return _ctx.Addresses.AsNoTracking()
                                  .Where(a => a.Postcode.Replace(" ", "").StartsWith(searchTerm))
                                  .GroupBy(a => new { a.Postcode, a.Town, a.Street })
-                                 .Select(address => new AddressGroup()
+                                 .Select(a => new AddressData()
                                  {
-                                    Postcode = address.Key.Postcode,
-                                    Town = address.Key.Town,
-                                    Street = address.Key.Street,
-                                    Count = address.Count()
+                                     Postcode = a.Key.Postcode,
+                                     Town = a.Key.Town,
+                                     Street = a.Key.Street,
+                                     Count = a.Count(),
+                                     IsPostcode = false
                                  })
                                  .Take(10)
                                  .OrderBy(a => a.Postcode)
                                  .ToList();
         }
 
-        public IEnumerable<AddressGroup> GetFullAddresses(string postcode)
+        public IEnumerable<AddressData> GetFullAddresses(string postcode)
         {
-            throw new System.NotImplementedException();
+            return _ctx.Addresses.AsNoTracking()
+                .Where(a => a.Postcode == postcode)
+                .Select(a => new AddressData()
+                {
+                    Postcode = a.Postcode,
+                    Organisation = a.Organisation,
+                    Number = a.Number,
+                    Town = a.Town,
+                    Street = a.Street,
+                    IsPostcode = true
+                })
+                .OrderByDescending(a => a.Organisation ?? string.Empty)
+                .ThenBy(a => a.Number != null ? a.Number.ToString() : string.Empty)
+                .ToList();
         }
-        
+
     }
 }
