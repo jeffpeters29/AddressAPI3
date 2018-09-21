@@ -8,8 +8,8 @@ namespace AddressAPI3.Application.Address
     {
         IEnumerable<Address> GetAddresses(string searchTerm);
 
-        IEnumerable<AddressGroup> GetGroupedAddresses(string searchTerm);
+        IEnumerable<AddressData> GetGroupedAddresses(string searchTerm);
 
-        IEnumerable<AddressGroup> GetFullAddresses(string postcode);
+        IEnumerable<AddressData> GetFullAddresses(string postcode);
     }
 }

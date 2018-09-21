@@ -33,12 +33,12 @@ namespace AddressAPI3.Application.Address
             ;
         }
 
-        public IEnumerable<AddressGroup> GetGroupedAddresses(string searchTerm)
+        public IEnumerable<AddressData> GetGroupedAddresses(string searchTerm)
         {
             return null;
         }
 
-        public IEnumerable<AddressGroup> GetFullAddresses(string postcode)
+        public IEnumerable<AddressData> GetFullAddresses(string postcode)
         {
             return null;
         }

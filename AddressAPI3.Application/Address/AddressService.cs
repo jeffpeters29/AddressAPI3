@@ -13,7 +13,7 @@ namespace AddressAPI3.Application.Address
             _addressRepository = addressRepository;
         }
 
-        public IEnumerable<AddressGroup> GetAddresses(string searchTerm)
+        public IEnumerable<AddressData> GetAddresses(string searchTerm)
         {
             var addresses = searchTerm.IsPostcodeLength()
                 ? _addressRepository.GetFullAddresses(searchTerm)

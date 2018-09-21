@@ -5,6 +5,6 @@ namespace AddressAPI3.Application.Address
 {
     public interface IAddressService
     {
-        IEnumerable<AddressGroup> GetAddresses(string searchTerm);
+        IEnumerable<AddressData> GetAddresses(string searchTerm);
     }
 }

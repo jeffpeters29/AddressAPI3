@@ -22,18 +22,16 @@ namespace AddressAPI3.API.Controllers
     {
         private readonly ILogger<AddressController> _logger;
         private readonly IMailService _mailService;
-        //private readonly IAddressRepository _addressRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMemoryCache _cache;
         private readonly IAddressService _addressService;
 
-        public AddressController(ILogger<AddressController> logger, IMailService mailService  //, IAddressRepository addressRepository
+        public AddressController(ILogger<AddressController> logger, IMailService mailService 
                                 , IUserRepository userRepository, IMemoryCache cache
                                 , IAddressService addressService)
         {
             _logger = logger;
             _mailService = mailService;
-            //_addressRepository = addressRepository;
             _userRepository = userRepository;
             _cache = cache;
             _addressService = addressService;
@@ -79,15 +77,12 @@ namespace AddressAPI3.API.Controllers
 
         private IEnumerable<Address> GetAddresses(string searchTerm)
         {
-            // If possible return data from cache, otherwise get from repository
-            //if (_cache.TryGetValue(searchTerm, out IEnumerable<AddressGroup> addresses)) return addresses;
+            // If possible return data from cache...
+            if (_cache.TryGetValue(searchTerm, out IEnumerable<AddressData> addresses)) return addresses;
 
-            IEnumerable<AddressGroup> addresses = new List<AddressGroup>();
-
+            // ... otherwise get from repository (and then put into cache)
             addresses = _addressService.GetAddresses(searchTerm);
-
             _cache.Set(searchTerm, addresses);
-
             return addresses;
         }
 
