@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
 using System.Text;
-using AddressAPI3.Domain;
-using Microsoft.AspNetCore.Identity;
 
 namespace AddressAPI3.Common.Security
 {

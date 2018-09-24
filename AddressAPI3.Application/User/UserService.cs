@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 
 namespace AddressAPI3.Application.User
 {
@@ -12,12 +12,18 @@ namespace AddressAPI3.Application.User
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly AppSettings _appSettings;
+        public string _secret { get; set; }
+        //private readonly AppSettings _appSettings;
 
-        public UserService(IOptions<AppSettings> appSettings, IUserRepository userRepository)
+        // note: CTOR CHAINING
+        public UserService(IOptions<AppSettings> appSettings, IUserRepository userRepository) : this(userRepository)
+        {
+            _secret = appSettings.Value.Secret;
+        }
+
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _appSettings = appSettings.Value;
         }
 
         public User Authenticate(string username, string password, string referer)
@@ -28,17 +34,16 @@ namespace AddressAPI3.Application.User
 
             // Authentication successful so generate JWT
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+            var key = Encoding.ASCII.GetBytes(_secret);                  //_appSettings.Secret
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 //Issuer = user.Referrer,
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Name, user.Id.ToString()),
-                    new Claim(ClaimTypes.Surname, user.LastName),
-                    new Claim(ClaimTypes.Uri, referer)
-                }),
-                Expires = DateTime.UtcNow.AddSeconds(60),     
+                Subject = new ClaimsIdentity(new Claim[]{
+                                                            new Claim(ClaimTypes.Name, user.Id.ToString()),
+                                                            new Claim(ClaimTypes.Surname, user.LastName),
+                                                            new Claim(ClaimTypes.Uri, referer)
+                                                        }),
+                Expires = DateTime.UtcNow.AddSeconds(60),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -46,7 +51,7 @@ namespace AddressAPI3.Application.User
 
             // remove password before returning
             user.Password = null;
-            
+
             return user;
         }
     }
