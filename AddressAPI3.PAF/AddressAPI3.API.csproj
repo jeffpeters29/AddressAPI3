@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <Configurations>Debug;Release;Staging</Configurations>
+    <UserSecretsId>2b1ba7dd-5e94-41f6-9ab3-b63ff4aec98c</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

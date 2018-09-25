@@ -87,7 +87,7 @@ namespace AddressAPI3.API
             loggerFactory.AddConsole();
             loggerFactory.AddNLog();
 
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsStaging())
                 app.UseDeveloperExceptionPage();
             else
                 app.UseExceptionHandler();
