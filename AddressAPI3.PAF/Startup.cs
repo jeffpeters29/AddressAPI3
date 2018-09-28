@@ -30,9 +30,14 @@ namespace AddressAPI3.API
         public void ConfigureServices(IServiceCollection services)
         {
             var efConnectionString = Configuration.GetConnectionString("EFConnection");
-            var azureConnectionString = Configuration.GetConnectionString("AzureStorageConnection");
+            var azureConnectionString = Configuration.GetConnectionString("AzureTableConnection");
             var efUserConnectionString = Configuration.GetConnectionString("EFUserConnection");
+
             var mailTo = Configuration["MailSettings:mailTo"];
+            var cosmosUri = Configuration["Cosmos:Uri"];
+            var cosmosKey = Configuration["Cosmos:Key"];
+            var cosmosDatabase = Configuration["Cosmos:Database"];
+            var cosmosCollection = Configuration["Cosmos:Collection"];
 
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()
                                                                             .AllowAnyMethod()
@@ -74,8 +79,9 @@ namespace AddressAPI3.API
             services.AddScoped<IUserRepository, EFUserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAddressService, AddressService>();
-            services.AddScoped<IAddressRepository, EFAddressRepository>();
+            //services.AddScoped<IAddressRepository, EFAddressRepository>();
             //services.AddScoped<IAddressRepository, AzureAddressRepository>(serviceProvider => new AzureAddressRepository(azureConnectionString));
+            services.AddScoped<IAddressRepository, CosmosRepository>(serviceProvider => new CosmosRepository(cosmosUri,cosmosKey,cosmosDatabase, cosmosCollection));
 
             services.AddMvc();
 

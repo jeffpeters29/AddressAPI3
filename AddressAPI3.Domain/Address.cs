@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace AddressAPI3.Domain
 {
@@ -11,7 +12,10 @@ namespace AddressAPI3.Domain
         public string Organisation { get; set; }
         public string UDPRN { get; set; }
 
+        [JsonProperty("Id")]
         public int Id { get; set; }
+        [JsonProperty("id")]
+        public Guid id { get; set; }
         public DateTime Inserted { get; set; }
     }
 }

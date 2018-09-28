@@ -38,6 +38,8 @@ namespace AddressAPI3.Application.Address
 
         public IEnumerable<AddressData> GetGroupedAddresses(string searchTerm)
         {
+            // (2) Now replaced with 2 step process 
+            //     Step 1 - Groups with counts
             return _ctx.Addresses.AsNoTracking()
                                  .Where(a => a.Postcode.Replace(" ", "").StartsWith(searchTerm))
                                  .GroupBy(a => new { a.Postcode, a.Town, a.Street })
@@ -56,6 +58,7 @@ namespace AddressAPI3.Application.Address
 
         public IEnumerable<AddressData> GetFullAddresses(string postcode)
         {
+            // (2) Step 2 - Details of specific postcode chosen by user
             return _ctx.Addresses.AsNoTracking()
                 .Where(a => a.Postcode == postcode)
                 .Select(a => new AddressData()

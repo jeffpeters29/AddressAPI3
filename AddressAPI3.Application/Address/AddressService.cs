@@ -1,6 +1,7 @@
 ﻿using AddressAPI3.Application.Helpers;
 using AddressAPI3.Domain;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AddressAPI3.Application.Address
 {
