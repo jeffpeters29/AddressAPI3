@@ -69,7 +69,7 @@ namespace AddressAPI3.API.Controllers
                 var innerException = (ex.InnerException != null) ? ex.InnerException.Message : "";
 
                 _logger.LogCritical($"###  Exception whilst searching for postcode {searchTerm} ### ", ex);
-                _mailService.Send($"PAF API : Critical Error - {searchTerm}", ex.Message + " : " + innerException);
+                await _mailService.Send($"PAF API : Critical Error - {searchTerm}", ex.Message + " : " + innerException);
 
                 return StatusCode(500, "A problem happened whilst searching for searchTerm {searchTerm}");
             }
@@ -116,7 +116,7 @@ namespace AddressAPI3.API.Controllers
 
             // Mail AppErrors
             if (IsElapsedTimeTooLong(sw))
-                _mailService.Send("PAF API : Time Warning", $"Elapsed Time : {sw.ElapsedMilliseconds}");
+                await _mailService.Send("PAF API : Time Warning", $"Elapsed Time : {sw.ElapsedMilliseconds}");
         }
 
         private static bool IsElapsedTimeTooLong(Stopwatch sw)

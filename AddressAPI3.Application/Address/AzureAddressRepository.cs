@@ -17,9 +17,9 @@ namespace AddressAPI3.Application.Address
         {
             var task = GetAllStartsWith(searchTerm);
 
-            task.Wait(); //wait until task is completed
+            task.Wait(); 
 
-            return (IEnumerable<Address>) task.Result.Select(a => new Address()
+            return task.Result.Select(a => new Address()
                 {
                     Postcode = a.PartitionKey,
                     Number = a.Number == string.Empty ? 0 : Convert.ToInt32(a.Number),

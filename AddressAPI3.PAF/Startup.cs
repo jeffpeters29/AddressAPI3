@@ -15,6 +15,7 @@ using NLog.Extensions.Logging;
 using System.Text;
 using AddressAPI3.Common.Security;
 using AddressAPI3.EFUserData;
+using System.Collections.Generic;
 
 namespace AddressAPI3.API
 {
@@ -34,6 +35,8 @@ namespace AddressAPI3.API
             var efUserConnectionString = Configuration.GetConnectionString("EFUserConnection");
 
             var mailTo = Configuration["MailSettings:mailTo"];
+            var mailFrom = Configuration["MailSettings:mailFrom"];
+
             var cosmosUri = Configuration["Cosmos:Uri"];
             var cosmosKey = Configuration["Cosmos:Key"];
             var cosmosDatabase = Configuration["Cosmos:Database"];
@@ -74,11 +77,13 @@ namespace AddressAPI3.API
             services.AddDbContext<UserContext>(o => o.UseSqlServer(efUserConnectionString));
 
             // DI
-            services.AddTransient<IMailService, MockMailService>(serviceProvider => new MockMailService(mailTo));
+            services.AddTransient<IMailService, AppErrorMailService>(serviceProvider => new AppErrorMailService(mailTo, mailFrom));
             services.AddScoped<IPasswordHashService, PasswordHashService>();
             services.AddScoped<IUserRepository, EFUserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAddressService, AddressService>();
+
+            // DI - Address Data Store
             //services.AddScoped<IAddressRepository, EFAddressRepository>();
             //services.AddScoped<IAddressRepository, AzureAddressRepository>(serviceProvider => new AzureAddressRepository(azureConnectionString));
             services.AddScoped<IAddressRepository, CosmosRepository>(serviceProvider => new CosmosRepository(cosmosUri,cosmosKey,cosmosDatabase, cosmosCollection));

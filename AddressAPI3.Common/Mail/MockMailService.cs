@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace AddressAPI3.Common.Mail
 {
@@ -11,11 +12,13 @@ namespace AddressAPI3.Common.Mail
             _mailTo = mailTo;
         }
 
-        public void Send(string subject, string msg)
+        public async Task<bool> Send(string subject, string emailBody)
         {
             Debug.WriteLine($"Mail to : {_mailTo}");
             Debug.WriteLine($"Subject : {subject}");
-            Debug.WriteLine($"Message : {msg}");
+            Debug.WriteLine($"Body : {emailBody}");
+
+            return true;
         }
     }
 }

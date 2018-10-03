@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Mandrill" Version="3.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AddressAPI3.Domain\AddressAPI3.Domain.csproj" />
   </ItemGroup>
 
