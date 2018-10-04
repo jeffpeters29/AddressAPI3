@@ -1,8 +1,9 @@
-﻿using System;
-using AddressAPI3.Application.Address;
+﻿using AddressAPI3.Application.Address;
 using AddressAPI3.Application.User;
 using AddressAPI3.Common.Mail;
+using AddressAPI3.Common.Security;
 using AddressAPI3.EFData;
+using AddressAPI3.EFUserData;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,9 +14,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using NLog.Extensions.Logging;
 using System.Text;
-using AddressAPI3.Common.Security;
-using AddressAPI3.EFUserData;
-using System.Collections.Generic;
 
 namespace AddressAPI3.API
 {

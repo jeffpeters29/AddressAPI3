@@ -15,13 +15,11 @@ namespace AddressAPI3.Application.Address
     {
         private readonly DocumentClient _client;
         private readonly Uri _collectionUri;
-        private readonly string _collection;
 
         public CosmosRepository(string uri, string key, string database, string collection)
         {
             _client = new DocumentClient(new Uri(uri), key);
             _collectionUri = UriFactory.CreateDocumentCollectionUri(database, collection);
-            _collection = collection;
         }
 
         public IEnumerable<Address> GetAddresses(string searchTerm)
@@ -104,27 +102,5 @@ namespace AddressAPI3.Application.Address
                 throw;
             }
         }
-
-        //public IEnumerable<AddressData> GetFullAddressesSql(string postcode)
-        //{
-        //    var sql = $"SELECT * FROM Addresses a WHERE STARTSWITH(a.postcode,\"{postcode}\") = true";
-
-        //    var addresses = _client.CreateDocumentQuery<Domain.Address>(_collectionLink,sql)
-        //                            .AsEnumerable()
-        //                            .Select(a => new AddressData()
-        //                            {
-        //                                Postcode = a.Postcode,
-        //                                Organisation = a.Organisation,
-        //                                Number = a.Number,
-        //                                Town = a.Town,
-        //                                Street = a.Street,
-        //                                IsPostcode = true
-        //                            })
-        //                            .OrderByDescending(a => a.Organisation ?? string.Empty)
-        //                            .ThenBy(a => a.Number != null ? a.Number.ToString() : string.Empty)
-        //                            .ToList();
-
-        //    return addresses;
-        //}
     }
 }
