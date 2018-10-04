@@ -16,7 +16,7 @@ namespace AddressAPI3.Application.Helpers
         {
             // StartText : for specific postcodes
             var organisation = (!string.IsNullOrEmpty(addressData.Organisation)) ? addressData.Organisation.Trim() + ", " : string.Empty;
-            var number = (addressData.Number != 0) ? addressData.Number.ToString().Trim() + " " : string.Empty;
+            var number = addressData.BuildingNumber ?? string.Empty;
             var startText = (organisation + number).Trim() + " ";
 
             // Count : for grouped postcodes
@@ -25,7 +25,7 @@ namespace AddressAPI3.Application.Helpers
                             : string.Empty;
 
 
-            return $"{addressData.Postcode} : {startText}{addressData.Street}, {addressData.Town}" + countText
+            return $"{addressData.Postcode} : {startText}{addressData.Thoroughfare}, {addressData.Town}" + countText
                  + $"<span style='display:none'>{JsonConvert.SerializeObject(addressData)}</span>";
         }
     }

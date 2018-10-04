@@ -16,25 +16,25 @@ namespace AddressAPI3.Application.Address
             _ctx = ctx;
         }
 
-        public IEnumerable<Address> GetAddresses(string searchTerm)
-        {
-            // (1) Jeff's first go at bring back the addresses (without grouping)
-            //     Now replaced below
-            return _ctx.Addresses.AsNoTracking()
-                .Where(a => a.Postcode.Replace(" ", "").StartsWith(searchTerm))
-                .OrderBy(a => a.Postcode)
-                .Take(10)
-                .Select(a => new Address()
-                {
-                    Postcode = a.Postcode,
-                    Number = a.Number,
-                    Organisation = a.Organisation,
-                    Street = a.Street,
-                    Town = a.Town,
-                    UDPRN = a.UDPRN
-                })
-                .ToList();
-        }
+        //public IEnumerable<Address> GetAddresses(string searchTerm)
+        //{
+        //    // (1) Jeff's first go at bring back the addresses (without grouping)
+        //    //     Now replaced below
+        //    return _ctx.Addresses.AsNoTracking()
+        //        .Where(a => a.Postcode.Replace(" ", "").StartsWith(searchTerm))
+        //        .OrderBy(a => a.Postcode)
+        //        .Take(10)
+        //        .Select(a => new Address()
+        //        {
+        //            Postcode = a.Postcode,
+        //            Number = a.Number,
+        //            Organisation = a.Organisation,
+        //            Street = a.Street,
+        //            Town = a.Town,
+        //            UDPRN = a.UDPRN
+        //        })
+        //        .ToList();
+        //}
 
         public IEnumerable<AddressData> GetGroupedAddresses(string searchTerm)
         {
@@ -42,14 +42,14 @@ namespace AddressAPI3.Application.Address
             //     Step 1 - Groups with counts
             return _ctx.Addresses.AsNoTracking()
                                  .Where(a => a.Postcode.Replace(" ", "").StartsWith(searchTerm))
-                                 .GroupBy(a => new { a.Postcode, a.Town, a.Street })
+                                 .GroupBy(a => new { a.Postcode, a.Town })      //, a.Street
                                  .Select(a => new AddressData()
                                  {
-                                     Postcode = a.Key.Postcode,
+                                     //Street = a.Key.Street,
                                      Town = a.Key.Town,
-                                     Street = a.Key.Street,
-                                     Count = a.Count(),
-                                     IsPostcode = false
+                                     Postcode = a.Key.Postcode,
+                                     IsPostcode = false,
+                                     Count = a.Count()
                                  })
                                  .Take(10)
                                  .OrderBy(a => a.Postcode)
@@ -63,15 +63,15 @@ namespace AddressAPI3.Application.Address
                 .Where(a => a.Postcode == postcode)
                 .Select(a => new AddressData()
                 {
-                    Postcode = a.Postcode,
                     Organisation = a.Organisation,
-                    Number = a.Number,
+                    //BuildingNumber = a.BuildingNumber,
                     Town = a.Town,
-                    Street = a.Street,
+                    //Street = a.Street,
+                    Postcode = a.Postcode,
                     IsPostcode = true
                 })
                 .OrderByDescending(a => a.Organisation ?? string.Empty)
-                .ThenBy(a => a.Number != null ? a.Number.ToString() : string.Empty)
+                .ThenBy(a => a.Town ?? string.Empty)
                 .ToList();
         }
 
