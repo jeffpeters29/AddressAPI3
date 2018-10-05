@@ -17,9 +17,9 @@ namespace AddressAPI3.EFData.Entities
         [MaxLength(6)]
         public string POBox { get; set; }
 
-        [MaxLength(60)]
+        [MaxLength(80)]
         public string Thoroughfare { get; set; }
-        [MaxLength(60)]
+        [MaxLength(80)]
         public string ThoroughfareDependent { get; set; }
 
         [MaxLength(35)]
@@ -28,7 +28,7 @@ namespace AddressAPI3.EFData.Entities
         public string LocalityDependent { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(30)]
         public string Town { get; set; }
 
         [Required]

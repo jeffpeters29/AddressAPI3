@@ -25,9 +25,6 @@ namespace AddressAPI3.Domain
         //Postcode
         public string Postcode { get; set; }
         
-        //public string Street { get; set; }
-        //public int? Number { get; set; }
-        
         public string UDPRN { get; set; }
 
         [JsonProperty("Id")]
