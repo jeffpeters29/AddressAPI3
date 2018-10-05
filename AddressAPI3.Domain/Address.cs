@@ -24,13 +24,17 @@ namespace AddressAPI3.Domain
 
         //Postcode
         public string Postcode { get; set; }
-        
+
+        [JsonIgnore]
         public string UDPRN { get; set; }
 
+        [JsonIgnore]
         [JsonProperty("Id")]
         public int Id { get; set; }
+        [JsonIgnore]
         [JsonProperty("id")]
         public Guid id { get; set; }
+        [JsonIgnore]
         public DateTime Inserted { get; set; }
     }
 }

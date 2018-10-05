@@ -42,10 +42,10 @@ namespace AddressAPI3.Application.Address
             //     Step 1 - Groups with counts
             return _ctx.Addresses.AsNoTracking()
                                  .Where(a => a.Postcode.Replace(" ", "").StartsWith(searchTerm))
-                                 .GroupBy(a => new { a.Postcode, a.Town })      //, a.Street
+                                 .GroupBy(a => new { a.Postcode, a.Town, a.Thoroughfare })     
                                  .Select(a => new AddressData()
                                  {
-                                     //Street = a.Key.Street,
+                                     Thoroughfare = a.Key.Thoroughfare,
                                      Town = a.Key.Town,
                                      Postcode = a.Key.Postcode,
                                      IsPostcode = false,
@@ -58,20 +58,33 @@ namespace AddressAPI3.Application.Address
 
         public IEnumerable<AddressData> GetFullAddresses(string postcode)
         {
+            var x = _ctx.Addresses.AsNoTracking()
+                .Where(a => a.Postcode == postcode)
+                .OrderByDescending(a => a.Organisation ?? string.Empty)
+                .ThenBy(a => a.BuildingNumber ?? string.Empty)
+                .ToList();
+
             // (2) Step 2 - Details of specific postcode chosen by user
             return _ctx.Addresses.AsNoTracking()
                 .Where(a => a.Postcode == postcode)
                 .Select(a => new AddressData()
                 {
+                    SubBuildingName = a.SubBuildingName,
+                    BuildingName = a.BuildingName,
+                    BuildingNumber = a.BuildingNumber,
                     Organisation = a.Organisation,
-                    //BuildingNumber = a.BuildingNumber,
+                    Department = a.Department,
+                    POBox = a.POBox,
+                    Thoroughfare = a.Thoroughfare,
+                    ThoroughfareDependent = a.ThoroughfareDependent,
+                    Locality = a.Locality,
+                    LocalityDependent = a.LocalityDependent,
                     Town = a.Town,
-                    //Street = a.Street,
                     Postcode = a.Postcode,
                     IsPostcode = true
                 })
                 .OrderByDescending(a => a.Organisation ?? string.Empty)
-                .ThenBy(a => a.Town ?? string.Empty)
+                .ThenBy(a => a.BuildingNumber ?? string.Empty)
                 .ToList();
         }
 

@@ -15,17 +15,18 @@ namespace AddressAPI3.Application.Helpers
         public static string ToFormattedString(this AddressData addressData)
         {
             // StartText : for specific postcodes
-            var organisation = (!string.IsNullOrEmpty(addressData.Organisation)) ? addressData.Organisation.Trim() + ", " : string.Empty;
+            var organisation = !string.IsNullOrEmpty(addressData.Organisation) ? addressData.Organisation.Trim() + ", " : string.Empty;
             var buildingNumber = addressData.BuildingNumber ?? string.Empty;
             var startText = (organisation + buildingNumber).Trim();
             startText += startText.Length > 0 ? " " : string.Empty;
+            var thoroughfare = !string.IsNullOrEmpty(addressData.Thoroughfare) ? addressData.Thoroughfare.Trim() + ", " : string.Empty;
 
             // Count : for grouped postcodes
             var countText = (addressData.Count > 0)
                             ? " - " + $"{addressData.Count} " + ((addressData.Count == 1) ? "address" : "addresses")
                             : string.Empty;
 
-            return $"{addressData.Postcode} : {startText}{addressData.Thoroughfare}, {addressData.Town}" + countText
+            return $"{addressData.Postcode} : {startText}{thoroughfare} {addressData.Town}" + countText
                  + $"<span style='display:none'>{JsonConvert.SerializeObject(addressData)}</span>";
         }
     }
