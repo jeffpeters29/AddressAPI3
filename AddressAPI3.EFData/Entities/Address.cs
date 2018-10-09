@@ -4,6 +4,13 @@ namespace AddressAPI3.EFData.Entities
 {
     public class Address : BaseEntity
     {
+        [Required]
+        [MaxLength(10)]
+        public string Postcode { get; set; }
+        [Required]
+        [MaxLength(30)]
+        public string Town { get; set; }
+
         [MaxLength(30)]
         public string SubBuildingName { get; set; }
         [MaxLength(50)]
@@ -27,13 +34,7 @@ namespace AddressAPI3.EFData.Entities
         [MaxLength(35)]
         public string LocalityDependent { get; set; }
 
-        [Required]
-        [MaxLength(30)]
-        public string Town { get; set; }
-
-        [Required]
-        [MaxLength(10)]
-        public string Postcode { get; set; }
+       
 
         [Required]
         [StringLength(8)]
