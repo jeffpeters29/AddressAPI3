@@ -31,7 +31,7 @@ namespace AddressAPI3.EFData.Migrations
                         .HasMaxLength(4);
 
                     b.Property<string>("Department")
-                        .HasMaxLength(50);
+                        .HasMaxLength(60);
 
                     b.Property<string>("Locality")
                         .HasMaxLength(35);

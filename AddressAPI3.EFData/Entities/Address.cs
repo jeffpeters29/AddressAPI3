@@ -19,7 +19,7 @@ namespace AddressAPI3.EFData.Entities
         public string BuildingNumber { get; set; }
         [MaxLength(60)]
         public string Organisation { get; set; }
-        [MaxLength(50)]
+        [MaxLength(60)]
         public string Department { get; set; }
         [MaxLength(6)]
         public string POBox { get; set; }
