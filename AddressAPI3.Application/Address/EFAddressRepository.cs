@@ -21,25 +21,24 @@ namespace AddressAPI3.Application.Address
             // Step 1 : Groups with counts
             return _ctx.Postcodes.AsNoTracking()
                                  .Where(p => p.Id.Replace(" ", "").StartsWith(searchTerm))
-                                 .GroupBy(p => new { p.Id, p.Town, p.Description })     
                                  .Select(p => new AddressData()
                                  {
-                                     Thoroughfare = p.Key.Description,
-                                     Town = p.Key.Town,
-                                     Postcode = p.Key.Id,
+                                     Thoroughfare = p.Description,
+                                     Town = p.Town,
+                                     Postcode = p.Id,
                                      IsPostcode = false,
-                                     Count = p.Count()
+                                     Count = p.Count
                                  })
                                  .Take(10)
                                  .OrderBy(p => p.Postcode)
-                                 .ToList();
+                                 .ToList();           
         }
 
         public IEnumerable<AddressData> GetFullAddresses(string postcode)
         {
             // Step 2 : Get details of the specific postcode chosen by user
             return _ctx.Addresses.AsNoTracking()
-                .Where(a => a.Postcode == postcode)
+                .Where(a => a.Postcode.Replace(" ", "") == postcode.Replace(" ", ""))
                 .Select(a => new AddressData()
                 {
                     SubBuildingName = a.SubBuildingName,

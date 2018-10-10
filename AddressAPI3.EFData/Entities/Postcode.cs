@@ -17,5 +17,8 @@ namespace AddressAPI3.EFData.Entities
         [Required]
         [MaxLength(30)]
         public string Town { get; set; }
+
+        [Required]
+        public int Count { get; set; }
     }
 }

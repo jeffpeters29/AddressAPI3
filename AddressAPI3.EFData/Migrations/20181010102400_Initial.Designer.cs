@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AddressAPI3.EFData.Migrations
 {
     [DbContext(typeof(AddressContext))]
-    [Migration("20181009153618_Initial")]
+    [Migration("20181010102400_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,6 +78,8 @@ namespace AddressAPI3.EFData.Migrations
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(10);
+
+                    b.Property<int>("Count");
 
                     b.Property<string>("Description")
                         .HasMaxLength(80);

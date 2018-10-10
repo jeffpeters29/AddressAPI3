@@ -96,7 +96,7 @@ namespace AddressAPI3.API
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole();
-            loggerFactory.AddNLog();
+            //loggerFactory.AddNLog();
 
             if (env.IsDevelopment() || env.IsStaging())
                 app.UseDeveloperExceptionPage();

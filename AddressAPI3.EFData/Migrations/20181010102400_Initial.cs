@@ -38,7 +38,8 @@ namespace AddressAPI3.EFData.Migrations
                 {
                     Id = table.Column<string>(maxLength: 10, nullable: false),
                     Description = table.Column<string>(maxLength: 80, nullable: true),
-                    Town = table.Column<string>(maxLength: 30, nullable: false)
+                    Town = table.Column<string>(maxLength: 30, nullable: false),
+                    Count = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {

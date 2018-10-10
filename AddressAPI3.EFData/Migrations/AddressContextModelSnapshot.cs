@@ -77,6 +77,8 @@ namespace AddressAPI3.EFData.Migrations
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(10);
 
+                    b.Property<int>("Count");
+
                     b.Property<string>("Description")
                         .HasMaxLength(80);
 
