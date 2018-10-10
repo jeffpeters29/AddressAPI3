@@ -8,6 +8,9 @@ namespace AddressAPI3.EFData.Entities
         [MaxLength(10)]
         public string Postcode { get; set; }
         [Required]
+        [MaxLength(10)]
+        public string PostcodeDisplay { get; set; }
+        [Required]
         [MaxLength(30)]
         public string Town { get; set; }
 
@@ -34,10 +37,8 @@ namespace AddressAPI3.EFData.Entities
         [MaxLength(35)]
         public string LocalityDependent { get; set; }
 
-       
-
-        [Required]
-        [StringLength(8)]
-        public string UDPRN { get; set; }
+        //[Required]
+        //[StringLength(8)]
+        //public string UDPRN { get; set; }
     }
 }

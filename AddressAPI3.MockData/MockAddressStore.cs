@@ -16,7 +16,7 @@ namespace AddressAPI3.MockData
                 new Address()
                 {
                     Id = 1,
-                    UDPRN = "11111111",
+                    //UDPRN = "11111111",
                     SubBuildingName = null,
                     BuildingName = "Unit B",
                     BuildingNumber = null,
@@ -33,7 +33,7 @@ namespace AddressAPI3.MockData
                 new Address()
                 {
                     Id = 2,
-                    UDPRN = "22222222",
+                    //UDPRN = "22222222",
                     SubBuildingName = "Unit 12a-13",
                     BuildingName = null,
                     BuildingNumber = "8",
@@ -50,7 +50,7 @@ namespace AddressAPI3.MockData
                 new Address()
                 {
                     Id = 3,
-                    UDPRN = "33333333",
+                   //UDPRN = "33333333",
                     SubBuildingName = "Unit 16",
                     BuildingName = null,
                     BuildingNumber = null,
@@ -67,7 +67,7 @@ namespace AddressAPI3.MockData
                 new Address()
                 {
                     Id = 4,
-                    UDPRN = "44444444",
+                    //UDPRN = "44444444",
                     SubBuildingName = null,
                     BuildingName = null,
                     BuildingNumber = null,
@@ -84,7 +84,7 @@ namespace AddressAPI3.MockData
                 new Address()
                 {
                     Id = 5,
-                    UDPRN = "55555555",
+                    //UDPRN = "55555555",
                     SubBuildingName = null,
                     BuildingName = null,
                     BuildingNumber = null,
@@ -101,7 +101,7 @@ namespace AddressAPI3.MockData
                 new Address()
                 {
                     Id = 6,
-                    UDPRN = "66666666",
+                    //UDPRN = "66666666",
                     SubBuildingName = "Flat 31",
                     BuildingName = null,
                     BuildingNumber = "8",
@@ -118,7 +118,7 @@ namespace AddressAPI3.MockData
                 new Address()
                 {
                     Id = 7,
-                    UDPRN = "77777777",
+                    //UDPRN = "77777777",
                     SubBuildingName = null,
                     BuildingName = "93-94",
                     BuildingNumber = null,
@@ -135,7 +135,7 @@ namespace AddressAPI3.MockData
                 new Address()
                 {
                     Id = 7,
-                    UDPRN = "77777777",
+                    //UDPRN = "77777777",
                     SubBuildingName = null,
                     BuildingName = "93-94",
                     BuildingNumber = null,
@@ -152,7 +152,7 @@ namespace AddressAPI3.MockData
                 new Address()
                 {
                     Id = 8,
-                    UDPRN = "88888888",
+                    //UDPRN = "88888888",
                     SubBuildingName = null,
                     BuildingName = "Crow Park House",
                     BuildingNumber = null,
@@ -169,7 +169,7 @@ namespace AddressAPI3.MockData
                 new Address()
                 {
                     Id = 9,
-                    UDPRN = "99999999",
+                    //UDPRN = "99999999",
                     SubBuildingName = null,
                     BuildingName = "Unit 21",
                     BuildingNumber = null,

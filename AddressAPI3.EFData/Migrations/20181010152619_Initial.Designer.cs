@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AddressAPI3.EFData.Migrations
 {
     [DbContext(typeof(AddressContext))]
-    [Migration("20181010102400_Initial")]
+    [Migration("20181010152619_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,10 @@ namespace AddressAPI3.EFData.Migrations
                         .IsRequired()
                         .HasMaxLength(10);
 
+                    b.Property<string>("PostcodeDisplay")
+                        .IsRequired()
+                        .HasMaxLength(10);
+
                     b.Property<string>("SubBuildingName")
                         .HasMaxLength(30);
 
@@ -63,10 +67,6 @@ namespace AddressAPI3.EFData.Migrations
                     b.Property<string>("Town")
                         .IsRequired()
                         .HasMaxLength(30);
-
-                    b.Property<string>("UDPRN")
-                        .IsRequired()
-                        .HasMaxLength(8);
 
                     b.HasKey("Id");
 

@@ -61,12 +61,11 @@ namespace AddressAPI3.API
                     x.SaveToken = true;
                     x.TokenValidationParameters = new TokenValidationParameters
                     {
-                        //ClockSkew = TimeSpan.Zero,    // Ian (allows for different times configured on different PC's)
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(key),
                         ValidateIssuer = false,
                         ValidateAudience = false,
-                        ValidateLifetime = true         // Sean Wildermuth PL video (checks for expiration of token)
+                        ValidateLifetime = true         
                     };
                 });
 

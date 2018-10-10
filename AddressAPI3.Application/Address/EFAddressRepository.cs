@@ -38,7 +38,7 @@ namespace AddressAPI3.Application.Address
         {
             // Step 2 : Get details of the specific postcode chosen by user
             return _ctx.Addresses.AsNoTracking()
-                .Where(a => a.Postcode.Replace(" ", "") == postcode.Replace(" ", ""))
+                .Where(a => a.Postcode == postcode)
                 .Select(a => new AddressData()
                 {
                     SubBuildingName = a.SubBuildingName,
@@ -53,11 +53,34 @@ namespace AddressAPI3.Application.Address
                     LocalityDependent = a.LocalityDependent,
                     Town = a.Town,
                     Postcode = a.Postcode,
+                    PostcodeDisplay = a.PostcodeDisplay,
                     IsPostcode = true
                 })
                 .OrderByDescending(a => a.Organisation ?? string.Empty)
                 .ThenBy(a => a.BuildingNumber ?? string.Empty)
                 .ToList();
+
+            //return _ctx.Addresses.AsNoTracking()
+            //   .Where(a => a.Postcode.Replace(" ", "") == postcode.Replace(" ", ""))
+            //   .Select(a => new AddressData()
+            //   {
+            //       SubBuildingName = a.SubBuildingName,
+            //       BuildingName = a.BuildingName,
+            //       BuildingNumber = a.BuildingNumber,
+            //       Organisation = a.Organisation,
+            //       Department = a.Department,
+            //       POBox = a.POBox,
+            //       Thoroughfare = a.Thoroughfare,
+            //       ThoroughfareDependent = a.ThoroughfareDependent,
+            //       Locality = a.Locality,
+            //       LocalityDependent = a.LocalityDependent,
+            //       Town = a.Town,
+            //       Postcode = a.Postcode,
+            //       IsPostcode = true
+            //   })
+            //   .OrderByDescending(a => a.Organisation ?? string.Empty)
+            //   .ThenBy(a => a.BuildingNumber ?? string.Empty)
+            //   .ToList();
         }
     }
 }
