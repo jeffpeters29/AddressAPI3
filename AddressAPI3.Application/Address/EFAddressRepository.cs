@@ -16,55 +16,28 @@ namespace AddressAPI3.Application.Address
             _ctx = ctx;
         }
 
-        //public IEnumerable<Address> GetAddresses(string searchTerm)
-        //{
-        //    // (1) Jeff's first go at bring back the addresses (without grouping)
-        //    //     Now replaced below
-        //    return _ctx.Addresses.AsNoTracking()
-        //        .Where(a => a.Postcode.Replace(" ", "").StartsWith(searchTerm))
-        //        .OrderBy(a => a.Postcode)
-        //        .Take(10)
-        //        .Select(a => new Address()
-        //        {
-        //            Postcode = a.Postcode,
-        //            Number = a.Number,
-        //            Organisation = a.Organisation,
-        //            Street = a.Street,
-        //            Town = a.Town,
-        //            UDPRN = a.UDPRN
-        //        })
-        //        .ToList();
-        //}
-
         public IEnumerable<AddressData> GetGroupedAddresses(string searchTerm)
         {
-            // (2) Now replaced with 2 step process 
-            //     Step 1 - Groups with counts
-            return _ctx.Addresses.AsNoTracking()
-                                 .Where(a => a.Postcode.Replace(" ", "").StartsWith(searchTerm))
-                                 .GroupBy(a => new { a.Postcode, a.Town, a.Thoroughfare })     
-                                 .Select(a => new AddressData()
+            // Step 1 : Groups with counts
+            return _ctx.Postcodes.AsNoTracking()
+                                 .Where(p => p.Id.Replace(" ", "").StartsWith(searchTerm))
+                                 .GroupBy(p => new { p.Id, p.Town, p.Description })     
+                                 .Select(p => new AddressData()
                                  {
-                                     Thoroughfare = a.Key.Thoroughfare,
-                                     Town = a.Key.Town,
-                                     Postcode = a.Key.Postcode,
+                                     Thoroughfare = p.Key.Description,
+                                     Town = p.Key.Town,
+                                     Postcode = p.Key.Id,
                                      IsPostcode = false,
-                                     Count = a.Count()
+                                     Count = p.Count()
                                  })
                                  .Take(10)
-                                 .OrderBy(a => a.Postcode)
+                                 .OrderBy(p => p.Postcode)
                                  .ToList();
         }
 
         public IEnumerable<AddressData> GetFullAddresses(string postcode)
         {
-            var x = _ctx.Addresses.AsNoTracking()
-                .Where(a => a.Postcode == postcode)
-                .OrderByDescending(a => a.Organisation ?? string.Empty)
-                .ThenBy(a => a.BuildingNumber ?? string.Empty)
-                .ToList();
-
-            // (2) Step 2 - Details of specific postcode chosen by user
+            // Step 2 : Get details of the specific postcode chosen by user
             return _ctx.Addresses.AsNoTracking()
                 .Where(a => a.Postcode == postcode)
                 .Select(a => new AddressData()
@@ -87,6 +60,5 @@ namespace AddressAPI3.Application.Address
                 .ThenBy(a => a.BuildingNumber ?? string.Empty)
                 .ToList();
         }
-
     }
 }

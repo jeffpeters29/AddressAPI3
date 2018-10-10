@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AddressAPI3.EFData.Migrations
 {
     [DbContext(typeof(AddressContext))]
-    [Migration("20181009103006_Initial")]
+    [Migration("20181009153618_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,6 +71,24 @@ namespace AddressAPI3.EFData.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("AddressAPI3.EFData.Entities.Postcode", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(10);
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(80);
+
+                    b.Property<string>("Town")
+                        .IsRequired()
+                        .HasMaxLength(30);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Postcodes");
                 });
 #pragma warning restore 612, 618
         }

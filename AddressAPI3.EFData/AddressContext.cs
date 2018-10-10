@@ -10,5 +10,6 @@ namespace AddressAPI3.EFData
         }
 
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<Postcode> Postcodes { get; set; }
     }
 }

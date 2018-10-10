@@ -31,12 +31,28 @@ namespace AddressAPI3.EFData.Migrations
                 {
                     table.PrimaryKey("PK_Addresses", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Postcodes",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 10, nullable: false),
+                    Description = table.Column<string>(maxLength: 80, nullable: true),
+                    Town = table.Column<string>(maxLength: 30, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Postcodes", x => x.Id);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Addresses");
+
+            migrationBuilder.DropTable(
+                name: "Postcodes");
         }
     }
 }
