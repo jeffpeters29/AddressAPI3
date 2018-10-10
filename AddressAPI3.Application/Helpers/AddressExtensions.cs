@@ -16,8 +16,11 @@ namespace AddressAPI3.Application.Helpers
         {
             // StartText : for specific postcodes
             var organisation = !string.IsNullOrEmpty(addressData.Organisation) ? addressData.Organisation.Trim() + ", " : string.Empty;
-            var buildingNumber = addressData.BuildingNumber ?? string.Empty;
-            var startText = (organisation + buildingNumber).Trim();
+            var buildingNumber = !string.IsNullOrEmpty(addressData.BuildingNumber) ? addressData.BuildingNumber.Trim() + " " : string.Empty; 
+            var buildingName = !string.IsNullOrEmpty(addressData.BuildingName) ? addressData.BuildingName.Trim() + " " : string.Empty; 
+            var subBuildingName = !string.IsNullOrEmpty(addressData.SubBuildingName) ? addressData.SubBuildingName.Trim() + " " : string.Empty;
+            var premises = subBuildingName + buildingName + buildingNumber;
+            var startText = (organisation + premises).Trim();
             startText += startText.Length > 0 ? " " : string.Empty;
             var thoroughfare = !string.IsNullOrEmpty(addressData.Thoroughfare) ? addressData.Thoroughfare.Trim() + ", " : string.Empty;
 
