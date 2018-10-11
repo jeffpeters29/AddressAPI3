@@ -14,6 +14,9 @@ namespace AddressAPI3.Application.Helpers
 
         public static string ToFormattedString(this AddressData addressData)
         {
+            // Postcode
+            var postcode = !string.IsNullOrEmpty(addressData.PostcodeDisplay) ? addressData.PostcodeDisplay.Trim() : addressData.Postcode.Trim();
+
             // StartText : for specific postcodes
             var organisation = !string.IsNullOrEmpty(addressData.Organisation) ? addressData.Organisation.Trim() + ", " : string.Empty;
             var department = !string.IsNullOrEmpty(addressData.Department) ? addressData.Department.Trim() + ", " : string.Empty;
@@ -31,7 +34,7 @@ namespace AddressAPI3.Application.Helpers
                             ? " - " + $"{addressData.Count} " + ((addressData.Count == 1) ? "address" : "addresses")
                             : string.Empty;
 
-            return $"{addressData.Postcode} : {startText}{thoroughfare} {addressData.Town}" + countText
+            return $"{postcode} : {startText}{thoroughfare} {addressData.Town}" + countText
                  + $"<span style='display:none'>{JsonConvert.SerializeObject(addressData)}</span>";
         }
     }
