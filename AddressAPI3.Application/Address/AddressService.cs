@@ -15,7 +15,7 @@ namespace AddressAPI3.Application.Address
 
         public IEnumerable<AddressData> GetAddresses(string searchTerm)
         {
-            var addresses = searchTerm.IsPostcodeLength()
+            var addresses = searchTerm.IsCompletePostcode()
                 ? _addressRepository.GetFullAddresses(searchTerm)
                 : _addressRepository.GetGroupedAddresses(searchTerm);
 

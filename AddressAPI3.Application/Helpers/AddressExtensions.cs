@@ -5,11 +5,13 @@ namespace AddressAPI3.Application.Helpers
 {
     public static class AddressExtensions
     {
-        public static bool IsPostcodeLength(this string inputString)
+        public static bool IsCompletePostcode(this string inputString)
         {
             inputString = inputString.RemoveWhiteSpace();
 
-            return inputString.Length > 5;
+            var IsStartsTwoChars = inputString.IsStartsTwoChars();
+
+            return inputString.Length > (IsStartsTwoChars ? 6 : 5); 
         }
 
         public static string ToFormattedString(this AddressData addressData)

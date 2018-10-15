@@ -17,6 +17,7 @@ namespace AddressAPI3.Application.User
 
         public async Task LogActivity(ActivityLog activityLog)
         {
+            throw new NotImplementedException();
         }
     }
 }

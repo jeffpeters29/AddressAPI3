@@ -11,5 +11,10 @@ namespace AddressAPI3.Application.Helpers
 
             //return Regex.Replace(self.Trim(), @"\s", "");
         }
+
+        public static bool IsStartsTwoChars(this string self)
+        {
+            return Regex.IsMatch(self, @"/[A-Za-z]{2}[0-9]+");
+        }
     }
 }

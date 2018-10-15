@@ -103,16 +103,16 @@ namespace AddressAPI3.API.Controllers
             if (string.IsNullOrEmpty(searchTerm)) return;
 
             // Simple logging (NLog / Console)
-            _logger.LogInformation($"### Postcode searched for {searchTerm}");
+            //_logger.LogInformation($"### Postcode searched for {searchTerm}");
 
             // Log statistics to db
-            await _userRepository.LogActivity(new ActivityLog()
-            {
-                UserId = Convert.ToInt32(userId),
-                Referer = referer,
-                SearchTerm = searchTerm,
-                ElapsedTime = sw.ElapsedMilliseconds
-            });
+            //await _userRepository.LogActivity(new ActivityLog()
+            //{
+            //    UserId = Convert.ToInt32(userId),
+            //    Referer = referer,
+            //    SearchTerm = searchTerm,
+            //    ElapsedTime = sw.ElapsedMilliseconds
+            //});
 
             // Mail AppErrors
             if (IsElapsedTimeTooLong(sw))
